@@ -1,4 +1,23 @@
+// Button Component
 var Button = React.createClass({
+  render: function() {
+    return (
+      <button onClick={this.props.localHandleClick}>Click Me</button>
+    );
+  },
+});
+
+// Result Component
+var Result = React.createClass({
+  render: function() {
+	return (
+	  <div>{this.props.localCounter}</div>
+    );
+  },
+});
+
+// Main component
+var Main = React.createClass({
   // initial state
   getInitialState: function() {
 	return {counter: 0};
@@ -7,15 +26,17 @@ var Button = React.createClass({
   handleClick: function() {
 	this.setState({ counter: this.state.counter + 1} );
   },
-  // render method
   render: function() {
     return (
-      <button onClick={this.handleClick}>{this.state.counter}</button>
-    );
-  }
+	  <div>
+		<Button localHandleClick={this.handleClick} />
+		<Result localCounter={this.state.counter} />
+	  </div>
+	);
+  },
 });
 
 React.render(
-  <Button />,
+  <Main />,
   document.getElementById("root")
 );
