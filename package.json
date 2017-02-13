@@ -4,6 +4,7 @@
   "description": "a get-started tutorial of react, including use of bootstrap",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,7 +16,7 @@
     "tutorial"
   ],
   "author": "Hong Xiao",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/jeffhongxiao/react-get-started/issues"
   },
@@ -23,5 +24,8 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "express": "^4.14.1"
+  },
+  "engines": {
+    "node": "4.2.6"
   }
 }
