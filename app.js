@@ -6,6 +6,7 @@ app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
 // NOT WORKING AS EXPECTED
 //app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
-app.listen(3333, function () {
-  console.log('Serving static files under /, on port 3333!')
+var port = process.env.PORT || 3333
+app.listen(port, function () {
+  console.log('Serving static files under /, on port: ' + port)
 })
