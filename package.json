@@ -1,0 +1,26 @@
+{
+  "name": "react-get-started",
+  "version": "1.0.0",
+  "description": "a get-started tutorial of react, including use of bootstrap",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeffhongxiao/react-get-started.git"
+  },
+  "keywords": [
+    "react",
+    "tutorial"
+  ],
+  "author": "Hong Xiao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeffhongxiao/react-get-started/issues"
+  },
+  "homepage": "https://github.com/jeffhongxiao/react-get-started#readme",
+  "dependencies": {
+    "express": "^4.14.1"
+  }
+}
