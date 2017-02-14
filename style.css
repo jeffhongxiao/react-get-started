@@ -15,6 +15,18 @@
 	margin-top: 50px;
 }
 
-.well {
+#stars-frame, #answer-frame .well {
 	height: 150px;
+}
+
+#numbers-frame .number {
+	display: inline-block;
+	margin: 0.5em;
+	background: #bbb;
+	width: 30px;
+	text-align: center;
+	font-size: 22px;
+	border-radius: 50%;
+	
+	cursor: pointer;
 }

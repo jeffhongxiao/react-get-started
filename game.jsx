@@ -15,25 +15,48 @@ var StarsFrame = React.createClass({
 				  {stars}
 				</div>	 
 			</div>
-		)
+		);
 	},
 });
 
 var ButtonFrame = React.createClass({
 	render: function() {
-		return <div id="button-frame">
-						 <button className="btn btn-primary btn-lg">=</button>
-					 </div>
+		return (					
+			<div id="button-frame">
+				<button className="btn btn-primary btn-lg">=</button>
+			</div>
+		)
 	},
 });
 
 var AnswerFrame = React.createClass({
 	render: function() {
-		return <div id="answer-frame">
-						 <div className="well">
-						   ...
-						 </div>
-					 </div>
+		return (
+			<div id="answer-frame">
+			  <div className="well">
+				  ...
+				</div>
+			</div>
+		);
+	},
+});
+
+var NumbersFrame = React.createClass({
+	render: function() {
+		var numbers = [];
+		for (var i=1; i<=9; i++) {
+			numbers.push(
+				<div className="number">{i}</div>
+			)
+		};
+
+		return (
+			<div id="numbers-frame">
+				<div className="well">
+					{numbers}
+				</div>
+			</div>
+		);
 	},
 });
 
@@ -41,13 +64,15 @@ var Game = React.createClass({
 	render: function() {
 		return (
 			<div id="game">
-			<h2>Play Nine</h2>	
-			<hr />
-			<div className="clearfix">
-  			<StarsFrame />
-	  		<ButtonFrame />
-		  	<AnswerFrame />
-			</div>
+				<h2>Play Nine</h2>	
+				<hr />
+				<div className="clearfix">
+  				<StarsFrame />
+	  			<ButtonFrame />
+		  		<AnswerFrame />
+				</div>
+
+				<NumbersFrame />
 			</div>
 		);
 	},
