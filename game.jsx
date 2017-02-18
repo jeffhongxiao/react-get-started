@@ -29,7 +29,15 @@ var ButtonFrame = React.createClass({
 
 var AnswerFrame = React.createClass({
 	render: function() {
-		var selectedNumbers = this.props.selectedNumbers;
+		var unselectNumber = this.props.unselectNumber;
+
+		var selectedNumbers = this.props.selectedNumbers.map(function(i) {
+			return (
+				<span onClick={unselectNumber.bind(null, i)}>
+				{i}
+				</span>
+			);
+		});
 		return (
 			<div id="answer-frame">
 			  <div className="well">
@@ -44,11 +52,11 @@ var NumbersFrame = React.createClass({
 	render: function() {
 		var numbers = [];
 		var selectedNumbers = this.props.selectedNumbers;
-		var clickNumber = this.props.clickNumber;
+		var selectNumber = this.props.selectNumber;
 		for (var i=1; i<=9; i++) {
 			var className = "number selected-" + (selectedNumbers.indexOf(i)>=0);
 			numbers.push(
-				<div className={className} onClick={clickNumber.bind(null, i)}>{i}</div>
+				<div className={className} onClick={selectNumber.bind(null, i)}>{i}</div>
 			)
 		};
 
@@ -70,10 +78,18 @@ var Game = React.createClass({
 		};
 	},
 
-	clickNumber: function(number) {
+	selectNumber: function(number) {
 		if (this.state.selectedNumbers.indexOf(number) < 0) {
 			this.setState({ selectedNumbers: this.state.selectedNumbers.concat(number) });
 		}
+	},
+
+	unselectNumber: function(number) {
+		var selectedNumbers = this.state.selectedNumbers;
+		var index = selectedNumbers.indexOf(number);
+
+		selectedNumbers.splice(index, 1);
+		this.setState({ selectedNumbers: selectedNumbers});
 	},
 
 	render: function() {
@@ -84,10 +100,10 @@ var Game = React.createClass({
 				<div className="clearfix">
   				<StarsFrame numberOfStars={this.state.numberOfStars} />
 	  			<ButtonFrame />
-		  		<AnswerFrame selectedNumbers={this.state.selectedNumbers} />
+		  		<AnswerFrame selectedNumbers={this.state.selectedNumbers} unselectNumber={this.unselectNumber} />
 				</div>
 
-				<NumbersFrame selectedNumbers={this.state.selectedNumbers} clickNumber={this.clickNumber} />
+				<NumbersFrame selectedNumbers={this.state.selectedNumbers} selectNumber={this.selectNumber} />
 			</div>
 		);
 	},
