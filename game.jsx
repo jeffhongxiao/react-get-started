@@ -109,6 +109,16 @@ var NumbersFrame = React.createClass({
 	},
 });
 
+var DoneFrame = React.createClass({
+	render: function() {
+		return (
+			<div className="well text-center">
+				<h2>{this.props.doneStatus}</h2>					
+			</div>
+		);
+	}
+});
+
 var Game = React.createClass({
 	getInitialState: function() {
 		return {
@@ -116,7 +126,8 @@ var Game = React.createClass({
 			selectedNumbers: [],
 			usedNumbers: [],
 			redraws: 5,
-			correct: null
+			correct: null,
+			doneStatus: 'You win!',	// TODO: set to null to test
 		};
 	},
 
@@ -174,6 +185,16 @@ var Game = React.createClass({
 	render: function() {
 		var selectedNumbers = this.state.selectedNumbers;
 		var numberOfStars = this.state.numberOfStars;
+		var doneStatus = this.state.doneStatus;
+
+		var bottomFrame;
+		if (doneStatus) {
+				bottomFrame = <DoneFrame doneStatus={doneStatus} />;
+		}
+		else {
+				bottomFrame = <NumbersFrame selectedNumbers={selectedNumbers} selectNumber={this.selectNumber} usedNumbers={this.state.usedNumbers} />;
+		}
+
 		return (
 			<div id="game">
 				<h2>Play Nine</h2>	
@@ -185,7 +206,7 @@ var Game = React.createClass({
 		  		<AnswerFrame selectedNumbers={selectedNumbers} unselectNumber={this.unselectNumber} />
 				</div>
 
-				<NumbersFrame selectedNumbers={selectedNumbers} selectNumber={this.selectNumber} usedNumbers={this.state.usedNumbers} />
+				{bottomFrame}
 			</div>
 		);
 	},
