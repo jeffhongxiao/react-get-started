@@ -127,7 +127,7 @@ var Game = React.createClass({
 			usedNumbers: [],
 			redraws: 5,
 			correct: null,
-			doneStatus: 'You win!',	// TODO: set to null to test
+			doneStatus: null
 		};
 	},
 
@@ -179,6 +179,51 @@ var Game = React.createClass({
 				redraws: this.state.redraws - 1, 
 				selectedNumbers: [], 
 				correct: null });	
+		}
+	},
+
+	// common array question
+	// bit.ly/s-pcs
+	var possibleCombinationSum: function(arr, n) {
+		if (arr.indexOf(n) >= 0) {
+			return true;
+		}
+		if (arr[0] > n) {
+			return false;
+		}
+
+		if (arr[arr.length-1] > n) {
+			arr.pop();
+			return possibleCombinationSum(arr, n);
+		}	
+
+		// here's the fun part TODO
+	},
+
+	var combinationExists: function() {
+		var selectedNumbers = this.state.selectedNumbers;
+		var usedNumbers = this.state.usedNumbers;
+		var numberOfStars = this.state.numberOfStars;
+
+		var remaining = [];
+		for (var i=1; i<=9; i++) {
+			if (usedNumbers.indexOf(i) < 0) {
+				remaining.push(i);
+			}
+		}
+		
+		return this.possibleCombinationSum(remaining, numberOfStars);
+	},
+
+	updateDoneStatus: function() {
+		var usedNumbers = this.state.usedNumbers;
+		if (usedNumbers.length === 9) {
+			this.setState({doneStatus: 'Done. Nice!'});
+			return;
+		}
+
+		if (this.state.redraws === 0 && !this.combinationExists()) {
+			this.setState({doneStatus: 'Game Over. Try again'});
 		}
 	},
 
