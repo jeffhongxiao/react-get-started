@@ -1,3 +1,36 @@
+// common array question
+// bit.ly/s-pcs
+// assuming: arr is sorted increasingly
+var possibleCombinationSum = function(arr, n) {
+	if (arr.indexOf(n) >= 0) {
+		return true;
+	}
+	if (arr[0] > n) {
+		return false;
+	}
+
+	if (arr[arr.length-1] > n) {
+		arr.pop();
+		return possibleCombinationSum(arr, n);
+	}	
+
+	var listSize = arr.length;
+	var combinationsCount = (1 << listSize);
+	for (var i = 0; i < combinationsCount; i++) {
+		var combinationSum = 0;
+		for (var j = 0; j < listSize; j++) {
+			if (i & (1 << j)) {
+				combinationSum += arr[j];
+			}
+		}
+		if (n === combinationSum) {
+			return true;
+		}
+	}
+	return false;
+};
+
+
 var StarsFrame = React.createClass({
 	render: function() {
 		var stars = [];
@@ -113,7 +146,8 @@ var DoneFrame = React.createClass({
 	render: function() {
 		return (
 			<div className="well text-center">
-				<h2>{this.props.doneStatus}</h2>					
+				<h2>{this.props.doneStatus}</h2>
+				<button className="btn btn-default" onClick={this.props.replay}>Play again</button>
 			</div>
 		);
 	}
@@ -129,6 +163,10 @@ var Game = React.createClass({
 			correct: null,
 			doneStatus: null
 		};
+	},
+
+	replay: function() {
+		this.replaceState(this.getInitialState());	
 	},
 
 	randomNumber: function () {
@@ -158,6 +196,8 @@ var Game = React.createClass({
 			selectedNumbers: [],
 			correct: null,
 			numberOfStars: this.randomNumber(),
+		}, function() {
+			this.updateDoneStatus();
 		});
 	},
 
@@ -178,29 +218,14 @@ var Game = React.createClass({
 				numberOfStars: this.randomNumber(),
 				redraws: this.state.redraws - 1, 
 				selectedNumbers: [], 
-				correct: null });	
+				correct: null }, function() {
+					this.updateDoneStatus();				
+				});	
 		}
 	},
 
-	// common array question
-	// bit.ly/s-pcs
-	var possibleCombinationSum: function(arr, n) {
-		if (arr.indexOf(n) >= 0) {
-			return true;
-		}
-		if (arr[0] > n) {
-			return false;
-		}
 
-		if (arr[arr.length-1] > n) {
-			arr.pop();
-			return possibleCombinationSum(arr, n);
-		}	
-
-		// here's the fun part TODO
-	},
-
-	var combinationExists: function() {
+	possibleSolution: function() {
 		var selectedNumbers = this.state.selectedNumbers;
 		var usedNumbers = this.state.usedNumbers;
 		var numberOfStars = this.state.numberOfStars;
@@ -212,7 +237,7 @@ var Game = React.createClass({
 			}
 		}
 		
-		return this.possibleCombinationSum(remaining, numberOfStars);
+		return possibleCombinationSum(remaining, numberOfStars);
 	},
 
 	updateDoneStatus: function() {
@@ -222,7 +247,7 @@ var Game = React.createClass({
 			return;
 		}
 
-		if (this.state.redraws === 0 && !this.combinationExists()) {
+		if (this.state.redraws === 0 && !this.possibleSolution()) {
 			this.setState({doneStatus: 'Game Over. Try again'});
 		}
 	},
@@ -234,7 +259,7 @@ var Game = React.createClass({
 
 		var bottomFrame;
 		if (doneStatus) {
-				bottomFrame = <DoneFrame doneStatus={doneStatus} />;
+				bottomFrame = <DoneFrame doneStatus={doneStatus} replay={this.replay} />;
 		}
 		else {
 				bottomFrame = <NumbersFrame selectedNumbers={selectedNumbers} selectNumber={this.selectNumber} usedNumbers={this.state.usedNumbers} />;
